@@ -24,8 +24,14 @@ app.get('/', function(req, res) { // I used a get request, because this function
 /* SEARCH FOR MATCHING USERS | STEP 1 */
 
 app.get('/form', function(req, res) { // this form makes it possible to search for people
-	res.render('form.jade'); //this renders the form.jade with the search input and submit button
-});
+		fs.readFile('users.json', 'utf8', function(err, data) { // is reading the users.json file
+		user = JSON.parse(data);
+		res.render('form.jade', { // renders the index.jade file 
+			datajson: user //this makes the data from the users.json available to the variable datajson in jade 
+		});
+	});
+})
+
 
 app.post('/searchresult', function(request, response) { // this route is loaded, when someone presses the submit button
 	searchresult = request.body.searchresult // sets var searchresult equal to the input of the user in the form
